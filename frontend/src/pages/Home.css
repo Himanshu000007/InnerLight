@@ -1,0 +1,223 @@
+.home-container {
+  padding-top: 120px;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.home-hero {
+  text-align: center;
+  padding: 80px 24px;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--glass-bg);
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+  border: 1px solid var(--glass-border);
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.home-title {
+  font-size: clamp(48px, 8vw, 72px);
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 24px;
+  font-family: var(--font-secondary);
+  line-height: 1.1;
+  letter-spacing: -1px;
+}
+
+.title-accent {
+  filter: drop-shadow(0 0 10px var(--primary-light));
+}
+
+.home-subtitle {
+  font-size: clamp(18px, 3vw, 22px);
+  color: var(--text-medium);
+  font-weight: 400;
+  max-width: 600px;
+  margin: 0 auto 48px;
+  line-height: 1.6;
+}
+
+.hero-cta .btn-large {
+  padding: 16px 40px;
+  font-size: 18px;
+  border-radius: 100px;
+}
+
+.home-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 24px;
+}
+
+.feature-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  padding: 48px 32px;
+  border: 1px solid var(--card-border);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.feature-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  color: white;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+}
+
+.feature-card h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+  font-family: var(--font-secondary);
+}
+
+.feature-card p {
+  color: var(--text-medium);
+  line-height: 1.7;
+  margin-bottom: 32px;
+  font-size: 16px;
+}
+
+.feature-btn {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  transition: gap 0.3s ease;
+}
+
+.feature-btn:hover {
+  gap: 12px;
+  color: var(--primary-dark);
+}
+
+/* Wellness Tips */
+.wellness-tips {
+  background: var(--bg-secondary);
+  padding: 100px 24px;
+  margin: 80px 0;
+  border-top: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.tips-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 36px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 60px;
+  font-family: var(--font-secondary);
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+}
+
+.tip-item {
+  display: flex;
+  gap: 20px;
+}
+
+.tip-icon {
+  color: var(--primary);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.tip-item h4 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.tip-item p {
+  font-size: 15px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.home-message {
+  text-align: center;
+  padding: 80px 40px;
+  max-width: 800px;
+  margin: 40px auto 100px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--glass-border);
+}
+
+.home-message h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 24px;
+  font-family: var(--font-secondary);
+  font-style: italic;
+}
+
+.home-message p {
+  font-size: 18px;
+  color: var(--text-medium);
+  line-height: 1.8;
+}
+
+.home-footer {
+  text-align: center;
+  padding: 60px 24px;
+  color: var(--text-light);
+  font-size: 14px;
+  border-top: 1px solid var(--card-border);
+}
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@media (max-width: 768px) {
+  .home-features {
+    padding: 40px 20px;
+  }
+
+  .wellness-tips {
+    padding: 60px 24px;
+  }
+}

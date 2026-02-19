@@ -1,0 +1,271 @@
+.games-container {
+  padding-top: 120px;
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 80px;
+}
+
+.games-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.games-header h1 {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+  font-family: var(--font-secondary);
+  letter-spacing: -1px;
+}
+
+.games-header p {
+  font-size: 19px;
+  color: var(--text-medium);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.games-selection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.game-card {
+  border-radius: var(--radius-xl);
+  padding: 48px 32px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-status-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--primary);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.game-icon-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.game-card h3 {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+
+.game-card p {
+  color: var(--text-medium);
+  line-height: 1.6;
+  margin-bottom: 32px;
+  font-size: 16px;
+}
+
+.games-back-btn {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--primary);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 12px 24px;
+  border-radius: 100px;
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: var(--transition);
+}
+
+.games-back-btn:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* Common Game Layout */
+.game-controls-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.game-controls-header h2 {
+  font-size: 28px;
+  margin-bottom: 4px;
+  color: var(--text-dark);
+}
+
+.game-stat-item {
+  background: var(--primary-light);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(155, 135, 245, 0.2);
+}
+
+/* Bubble Game */
+.bubble-game {
+  padding: 40px;
+  border-radius: var(--radius-xl);
+  min-height: 650px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bubble-stage {
+  flex: 1;
+  position: relative;
+  background: linear-gradient(to bottom, transparent, rgba(176, 224, 230, 0.1));
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: crosshair;
+}
+
+.bubble-item {
+  position: absolute;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+/* Zen Match Game */
+.zen-match-game {
+  padding: 40px;
+  border-radius: var(--radius-xl);
+}
+
+.start-screen {
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-start-btn {
+  font-size: 20px;
+  padding: 20px 48px;
+  border-radius: 100px;
+}
+
+.zen-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.zen-tile {
+  aspect-ratio: 1;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.tile-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-lg);
+}
+
+.zen-tile.active .tile-inner {
+  transform: rotateY(180deg);
+}
+
+.tile-front,
+.tile-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile-front {
+  background: var(--bg-secondary);
+  color: var(--text-light);
+  font-size: 32px;
+  border: 1px solid var(--card-border);
+}
+
+.tile-back {
+  transform: rotateY(180deg);
+  border: 2px solid white;
+}
+
+.tile-color-name {
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.game-win-overlay {
+  text-align: center;
+  padding: 60px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  margin-top: 40px;
+  border: 1px solid var(--primary-light);
+}
+
+.game-win-overlay h3 {
+  font-size: 36px;
+  color: var(--primary-dark);
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .zen-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .game-controls-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+}
