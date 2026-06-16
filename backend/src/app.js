@@ -8,9 +8,12 @@ import { errorHandler } from './middleware/errorHandler.js';
 import { requestLogger } from './middleware/requestLogger.js';
 import { rateLimiter } from './middleware/rateLimiter.js';
 import routes from './routes/index.js';
+import cookieParser from 'cookie-parser';
+
 
 const app = express();
 
+app.use(cookieParser());
 // ============================================
 // SECURITY MIDDLEWARE
 // ============================================

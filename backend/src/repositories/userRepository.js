@@ -14,6 +14,12 @@ export class UserRepository {
     return await User.findOne({ email: email.toLowerCase() });
   }
 
+  async findByEmailWithPassword(email) {
+  return await User.findOne({
+    email: email.toLowerCase(),
+  }).select('+password');
+}
+
   async findByIdWithPassword(id) {
     return await User.findById(id).select('+password');
   }

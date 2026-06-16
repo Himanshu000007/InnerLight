@@ -1,5 +1,15 @@
+
+
+import dotenv from 'dotenv';
+dotenv.config();
+
+console.log('MONGODB_URI =', process.env.MONGODB_URI);
+
 import app from './app.js';
 import { connectDatabase } from './config/database.js';
+
+
+
 
 const PORT = process.env.PORT || 5000;
 
@@ -25,6 +35,9 @@ const startServer = async () => {
 ╚═══════════════════════════════════════╝
       `);
     });
+
+    console.log('JWT_ACCESS_SECRET =', process.env.JWT_ACCESS_SECRET);
+console.log('JWT_REFRESH_SECRET =', process.env.JWT_REFRESH_SECRET);
 
     // ============================================
     // GRACEFUL SHUTDOWN
