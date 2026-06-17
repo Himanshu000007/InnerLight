@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, MessageCircle, Share2, Bookmark, Flag, Plus, Search } from 'lucide-react';
+import { Heart, MessageCircle, Share2, Bookmark, Flag, Plus, Search, MessageSquare } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axiosInstance from '../../api/axios';
 import Card from '../../components/common/Card';
@@ -11,6 +12,7 @@ import { useAuth } from '../../contexts/AuthContext';
 
 const CommunityFeed = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,6 +22,16 @@ const CommunityFeed = () => {
   const [likes, setLikes] = useState({});
 
   const categories = ['all', 'advice', 'experience', 'question', 'support', 'celebration'];
+
+  const handleConnectChat = async (postId) => {
+    try {
+      await axiosInstance.post('/chats', { postId });
+      toast.success('Chat connection initiated!');
+      navigate('/chats');
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to connect');
+    }
+  };
 
   useEffect(() => {
     fetchPosts();
@@ -295,7 +307,19 @@ const CommunityFeed = () => {
                       </motion.button>
                     </div>
 
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 items-center">
+                      {(post.userId?._id || post.userId) !== (user?.id || user?._id) && (
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => handleConnectChat(post._id)}
+                          className="flex items-center gap-1.5 px-3 py-1.5 bg-primary bg-opacity-10 text-primary hover:bg-primary hover:text-white rounded-lg transition text-xs font-semibold mr-1"
+                        >
+                          <MessageSquare size={16} />
+                          Connect
+                        </motion.button>
+                      )}
+
                       <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}

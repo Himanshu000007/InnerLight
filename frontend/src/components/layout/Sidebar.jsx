@@ -13,6 +13,7 @@ import {
   X,
   AlertTriangle,
   Shield,
+  MessageSquare,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
@@ -22,11 +23,18 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   const { user } = useAuth();
   const [adminOpen, setAdminOpen] = useState(false);
 
+  const handleLinkClick = () => {
+    if (window.innerWidth < 768) {
+      setIsOpen(false);
+    }
+  };
+
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
     { icon: Heart, label: 'Mood Tracker', path: '/mood-tracker' },
     { icon: BookOpen, label: 'Journal', path: '/journal' },
     { icon: Users, label: 'Community', path: '/community' },
+    { icon: MessageSquare, label: 'Chats', path: '/chats' },
     { icon: Brain, label: 'AI Wellness', path: '/ai-wellness' },
     { icon: User, label: 'Profile', path: '/profile' },
     { icon: Settings, label: 'Settings', path: '/settings' },
@@ -90,7 +98,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleLinkClick}
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
                     active
                       ? 'bg-gradient-to-r from-primary to-secondary text-white'
@@ -134,7 +142,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                           <Link
                             key={item.path}
                             to={item.path}
-                            onClick={() => setIsOpen(false)}
+                            onClick={handleLinkClick}
                             className={`flex items-center gap-3 px-4 py-2 rounded-lg transition ml-4 ${
                               active
                                 ? 'bg-gradient-to-r from-primary to-secondary text-white'

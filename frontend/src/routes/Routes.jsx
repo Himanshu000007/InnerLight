@@ -24,6 +24,7 @@ import CommunityFeed from '../pages/dashboard/CommunityFeed';
 import AIWellness from '../pages/dashboard/AIwellness';
 import Profile from '../pages/dashboard/Profile';
 import Settings from '../pages/dashboard/Settings';
+import Chats from '../pages/dashboard/Chats';
 
 // Admin Pages
 import AdminDashboard from '../pages/admin/AdminDashboard';
@@ -89,6 +90,14 @@ const Routes_ = () => {
           element={
             <ProtectedRoute>
               <CommunityFeed />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chats"
+          element={
+            <ProtectedRoute>
+              <Chats />
             </ProtectedRoute>
           }
         />

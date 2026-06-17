@@ -9,6 +9,7 @@ import contactRoutes from './contactRoutes.js';
 import reportRoutes from './reportRoutes.js';
 import aiRoutes from './aiRoutes.js';
 import adminRoutes from './adminRoutes.js';
+import chatRoutes from './chatRoutes.js';
 
 const router = express.Router();
 
@@ -22,5 +23,6 @@ router.use('/contacts', contactRoutes);
 router.use('/reports', reportRoutes);
 router.use('/ai', aiRoutes);
 router.use('/admin', adminRoutes);
+router.use('/chats', chatRoutes);
 
 export default router;
