@@ -3,6 +3,9 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+console.log("CORS_ORIGIN =", process.env.CORS_ORIGIN);
+console.log("FRONTEND_URL =", process.env.FRONTEND_URL);
+
 console.log('MONGODB_URI =', process.env.MONGODB_URI);
 
 import app from './app.js';
