@@ -6,6 +6,10 @@ export class UserRepository {
     return await user.save();
   }
 
+  async countDocuments(filters = {}) {
+    return await User.countDocuments(filters);
+  }
+
   async findById(id) {
     return await User.findById(id);
   }

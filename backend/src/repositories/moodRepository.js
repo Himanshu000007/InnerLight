@@ -6,6 +6,10 @@ export class MoodRepository {
     return await mood.save();
   }
 
+  async countDocuments(filters = {}) {
+    return await Mood.countDocuments(filters);
+  }
+
   async findById(id) {
     return await Mood.findById(id);
   }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Users, AlertTriangle, MessageSquare, TrendingUp } from 'lucide-react';
 import axiosInstance from '../../api/axios';
 import Card from '../../components/common/Card';
@@ -105,27 +106,27 @@ const AdminDashboard = () => {
           <Users size={40} className="mx-auto text-primary mb-3" />
           <h3 className="text-lg font-semibold text-text mb-2">Manage Users</h3>
           <p className="text-text-secondary text-sm mb-4">View and manage user accounts</p>
-          <a href="/admin/users" className="text-primary hover:text-secondary font-semibold text-sm">
+          <Link to="/admin/users" className="text-primary hover:text-secondary font-semibold text-sm">
             Go to Users →
-          </a>
+          </Link>
         </Card>
 
         <Card className="p-8 text-center hover:shadow-lg transition cursor-pointer">
           <AlertTriangle size={40} className="mx-auto text-orange-500 mb-3" />
           <h3 className="text-lg font-semibold text-text mb-2">Review Reports</h3>
           <p className="text-text-secondary text-sm mb-4">Handle community reports</p>
-          <a href="/admin/reports" className="text-primary hover:text-secondary font-semibold text-sm">
+          <Link to="/admin/reports" className="text-primary hover:text-secondary font-semibold text-sm">
             Go to Reports →
-          </a>
+          </Link>
         </Card>
 
         <Card className="p-8 text-center hover:shadow-lg transition cursor-pointer">
           <MessageSquare size={40} className="mx-auto text-purple-500 mb-3" />
           <h3 className="text-lg font-semibold text-text mb-2">Moderation</h3>
           <p className="text-text-secondary text-sm mb-4">Moderate content and posts</p>
-          <a href="/admin/moderation" className="text-primary hover:text-secondary font-semibold text-sm">
+          <Link to="/admin/moderation" className="text-primary hover:text-secondary font-semibold text-sm">
             Go to Moderation →
-          </a>
+          </Link>
         </Card>
       </motion.div>
     </div>

@@ -16,12 +16,27 @@ const ResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const password = watch('newPassword');
 
-  const email = searchParams.get('email') || '';
-  const otp = searchParams.get('otp') || '';
+  const urlEmail = searchParams.get('email') || '';
+  const urlOtp = searchParams.get('otp') || '';
+
+  const showEmailInput = !urlEmail;
+  const showOtpInput = !urlOtp;
 
   const onSubmit = async (data) => {
     try {
-      await resetPassword(email, otp, data.newPassword);
+      const emailToUse = urlEmail || data.email;
+      const otpToUse = urlOtp || data.otp;
+
+      if (!emailToUse) {
+        toast.error('Email is required');
+        return;
+      }
+      if (!otpToUse) {
+        toast.error('Verification code (OTP) is required');
+        return;
+      }
+
+      await resetPassword(emailToUse, otpToUse, data.newPassword);
       navigate('/login');
     } catch (error) {
       // Error toast shown in AuthContext
@@ -76,6 +91,47 @@ const ResetPassword = () => {
           className="bg-card border border-border rounded-2xl p-8 backdrop-blur-sm"
         >
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {showEmailInput && (
+              <div>
+                <label className="block text-sm font-medium text-text mb-2">
+                  Email Address
+                </label>
+                <Input
+                  type="email"
+                  placeholder="you@example.com"
+                  {...register('email', {
+                    required: 'Email is required',
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: 'Invalid email address',
+                    },
+                  })}
+                  error={errors.email?.message}
+                />
+              </div>
+            )}
+
+            {showOtpInput && (
+              <div>
+                <label className="block text-sm font-medium text-text mb-2">
+                  Verification Code (6-digit OTP)
+                </label>
+                <Input
+                  type="text"
+                  placeholder="000000"
+                  maxLength="6"
+                  {...register('otp', {
+                    required: 'Verification code is required',
+                    pattern: {
+                      value: /^[0-9]{6}$/,
+                      message: 'Verification code must be 6 digits',
+                    },
+                  })}
+                  error={errors.otp?.message}
+                />
+              </div>
+            )}
+
             {/* New Password */}
             <div>
               <label className="block text-sm font-medium text-text mb-2">

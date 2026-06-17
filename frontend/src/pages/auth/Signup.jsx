@@ -22,7 +22,8 @@ const Signup = () => {
         email: data.email,
         password: data.password,
       });
-      navigate('/verify-email', { state: { email: data.email, firstName: data.firstName } });
+      // TEMPORARY: Email verification disabled, redirecting directly to login
+      navigate('/login', { state: { email: data.email } });
     } catch (error) {
       // Error toast is shown in AuthContext
     }

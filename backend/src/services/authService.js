@@ -49,19 +49,27 @@ export class AuthService {
       const otpRecord = await otpRepository.findByEmailAndOTP(email, otp);
 
       if (!otpRecord) {
-        throw new Error('Invalid OTP');
+        const error = new Error('Invalid OTP');
+        error.statusCode = 400;
+        throw error;
       }
 
       if (otpRecord.isExpired()) {
-        throw new Error('OTP has expired');
+        const error = new Error('OTP has expired');
+        error.statusCode = 400;
+        throw error;
       }
 
       if (otpRecord.isLocked()) {
-        throw new Error('Too many incorrect attempts. Please request a new OTP');
+        const error = new Error('Too many incorrect attempts. Please request a new OTP');
+        error.statusCode = 400;
+        throw error;
       }
 
       if (otpRecord.type !== type) {
-        throw new Error('Invalid OTP type');
+        const error = new Error('Invalid OTP type');
+        error.statusCode = 400;
+        throw error;
       }
 
       await otpRepository.markAsUsed(otpRecord._id);
@@ -83,7 +91,9 @@ export class AuthService {
     try {
       const existingUser = await userRepository.findByEmail(userData.email);
       if (existingUser) {
-        throw new Error('Email already registered');
+        const error = new Error('Email already registered');
+        error.statusCode = 400;
+        throw error;
       }
 
       const user = await userRepository.create({
@@ -91,14 +101,17 @@ export class AuthService {
         lastName: userData.lastName,
         email: userData.email,
         password: userData.password,
+        // TEMPORARY: Email verification disabled
+        // TODO: Re-enable when email provider is fixed
+        isEmailVerified: true,
       });
 
-      // const html = emailTemplates.welcome(userData.firstName);
-      // await sendEmail(
-      //   user.email,
-      //   'Welcome to InnerLight!',
-      //   html
-      // );
+      const html = emailTemplates.welcome(userData.firstName);
+      await sendEmail(
+        user.email,
+        'Welcome to InnerLight!',
+        html
+      );
 
       return {
         success: true,
@@ -135,17 +148,25 @@ export class AuthService {
       const user = await userRepository.findByEmailWithPassword(email);
 
       if (!user) {
-        throw new Error('Invalid email or password');
+        const error = new Error('Invalid email or password');
+        error.statusCode = 401;
+        throw error;
       }
 
       const isPasswordValid = await user.comparePassword(password);
       if (!isPasswordValid) {
-        throw new Error('Invalid email or password');
+        const error = new Error('Invalid email or password');
+        error.statusCode = 401;
+        throw error;
       }
 
+      // TEMPORARY: Email verification disabled
+      // TODO: Re-enable when email provider is fixed
+      /*
       if (!user.isEmailVerified) {
         throw new Error('Please verify your email before logging in');
       }
+      */
 
       if (!user.isActive) {
         throw new Error('Your account has been deactivated');

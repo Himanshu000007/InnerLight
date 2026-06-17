@@ -2,11 +2,15 @@ import { UserRepository } from '../repositories/userRepository.js';
 import { ReportRepository } from '../repositories/reportRepository.js';
 import { PostRepository } from '../repositories/postRepository.js';
 import { ContactRepository } from '../repositories/contactRepository.js';
+import { JournalRepository } from '../repositories/journalRepository.js';
+import { MoodRepository } from '../repositories/moodRepository.js';
 
 const userRepository = new UserRepository();
 const reportRepository = new ReportRepository();
 const postRepository = new PostRepository();
 const contactRepository = new ContactRepository();
+const journalRepository = new JournalRepository();
+const moodRepository = new MoodRepository();
 
 export class AdminService {
   async getDashboardStats() {
@@ -58,11 +62,16 @@ export class AdminService {
 
   async getSystemStats() {
     try {
+      const activeUsers = await userRepository.countDocuments({ isActive: true });
+      const totalPosts = await postRepository.countDocuments({ isArchived: false });
+      const totalJournals = await journalRepository.countDocuments({});
+      const totalMoods = await moodRepository.countDocuments({});
+
       return {
-        activeUsers: 0,
-        totalPosts: 0,
-        totalJournals: 0,
-        totalMoods: 0,
+        activeUsers,
+        totalPosts,
+        totalJournals,
+        totalMoods,
       };
     } catch (error) {
       console.error('Error getting system stats:', error);

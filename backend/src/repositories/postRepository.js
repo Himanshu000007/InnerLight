@@ -6,6 +6,10 @@ export class PostRepository {
     return await post.save();
   }
 
+  async countDocuments(filters = {}) {
+    return await Post.countDocuments(filters);
+  }
+
   async findById(id) {
     return await Post.findById(id).populate('userId', 'firstName lastName avatar');
   }

@@ -7,8 +7,23 @@ describe('Mood Endpoints', () => {
 
   // Setup before tests
   beforeAll(async () => {
-    // Login or create test user
-    // Get token for authenticated requests
+    // Create test user
+    const signupRes = await request(app).post('/api/v1/auth/signup').send({
+      firstName: 'Mood',
+      lastName: 'Tester',
+      email: 'moodtester@example.com',
+      password: 'TestPass123',
+    });
+
+    userId = signupRes.body.userId;
+
+    // Login test user
+    const loginRes = await request(app).post('/api/v1/auth/login').send({
+      email: 'moodtester@example.com',
+      password: 'TestPass123',
+    });
+
+    token = loginRes.body.accessToken;
   });
 
   describe('POST /moods', () => {

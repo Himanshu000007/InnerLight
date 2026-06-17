@@ -6,6 +6,10 @@ export class JournalRepository {
     return await journal.save();
   }
 
+  async countDocuments(filters = {}) {
+    return await Journal.countDocuments(filters);
+  }
+
   async findById(id) {
     return await Journal.findById(id).populate('userId', 'firstName lastName email');
   }

@@ -6,6 +6,10 @@ export class ContactRepository {
     return await contact.save();
   }
 
+  async countDocuments(filters = {}) {
+    return await Contact.countDocuments(filters);
+  }
+
   async findById(id) {
     return await Contact.findById(id);
   }

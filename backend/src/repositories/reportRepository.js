@@ -6,6 +6,10 @@ export class ReportRepository {
     return await report.save();
   }
 
+  async countDocuments(filters = {}) {
+    return await Report.countDocuments(filters);
+  }
+
   async findById(id) {
     return await Report.findById(id)
       .populate('reporterId', 'firstName lastName email')
