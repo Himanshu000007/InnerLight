@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, MessageSquare, Loader2, ArrowLeft, Info } from 'lucide-react';
 import axiosInstance from '../../api/axios';
@@ -6,9 +6,11 @@ import Card from '../../components/common/Card';
 import Button from '../../components/common/Button';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../contexts/AuthContext';
+import { useNotifications } from '../../contexts/NotificationContext';
 
 const Chats = () => {
   const { user } = useAuth();
+  const { markChatRead } = useNotifications();
   const [chats, setChats] = useState([]);
   const [activeChat, setActiveChat] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -17,6 +19,9 @@ const Chats = () => {
   const [newMessage, setNewMessage] = useState('');
   const [sending, setSending] = useState(false);
   const messagesEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
+  const prevMessageCountRef = useRef(0);
+  const isNearBottomRef = useRef(true);
 
   useEffect(() => {
     fetchChats();
@@ -27,17 +32,34 @@ const Chats = () => {
   useEffect(() => {
     let interval;
     if (activeChat) {
-      fetchMessages(activeChat._id, false);
+      fetchMessages(activeChat._id, true);
+      markChatRead(activeChat._id);
       interval = setInterval(() => fetchMessages(activeChat._id, false), 3000);
     } else {
       setMessages([]);
+      prevMessageCountRef.current = 0;
     }
     return () => clearInterval(interval);
   }, [activeChat]);
 
+  // Only auto-scroll when new messages arrive AND user is near bottom
   useEffect(() => {
-    scrollToBottom();
+    const newCount = messages.length;
+    const prevCount = prevMessageCountRef.current;
+    if (newCount > prevCount) {
+      if (isNearBottomRef.current) {
+        scrollToBottom();
+      }
+    }
+    prevMessageCountRef.current = newCount;
   }, [messages]);
+
+  const handleScroll = () => {
+    const container = messagesContainerRef.current;
+    if (!container) return;
+    const distFromBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
+    isNearBottomRef.current = distFromBottom < 80;
+  };
 
   const fetchChats = async () => {
     try {
@@ -197,7 +219,11 @@ const Chats = () => {
             </div>
 
             {/* Messages Feed */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div
+              ref={messagesContainerRef}
+              onScroll={handleScroll}
+              className="flex-1 overflow-y-auto p-4 space-y-4"
+            >
               {loadingMessages ? (
                 <div className="flex items-center justify-center h-full">
                   <Loader2 size={32} className="animate-spin text-primary" />

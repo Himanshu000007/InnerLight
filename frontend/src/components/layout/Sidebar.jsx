@@ -17,10 +17,12 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
+import { useNotifications } from '../../contexts/NotificationContext';
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const location = useLocation();
   const { user } = useAuth();
+  const { unreadCount } = useNotifications();
   const [adminOpen, setAdminOpen] = useState(false);
 
   const handleLinkClick = () => {
@@ -106,7 +108,13 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                   }`}
                 >
                   <Icon size={20} />
-                  <span className="font-medium">{item.label}</span>
+                  <span className="font-medium flex-1">{item.label}</span>
+                  {/* Unread badge on Chats */}
+                  {item.path === '/chats' && unreadCount > 0 && (
+                    <span className="ml-auto min-w-[20px] h-5 bg-danger text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1">
+                      {unreadCount > 9 ? '9+' : unreadCount}
+                    </span>
+                  )}
                 </Link>
               );
             })}

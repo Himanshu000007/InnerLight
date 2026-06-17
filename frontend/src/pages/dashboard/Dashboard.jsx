@@ -1,18 +1,36 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { Calendar, Heart, BookOpen, Users, Brain, TrendingUp } from 'lucide-react';
+import { Calendar, Heart, BookOpen, Users, Brain, TrendingUp, Sparkles, MessageSquare } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import axiosInstance from '../../api/axios';
 import Card from '../../components/common/Card';
 import Button from '../../components/common/Button';
 import { Link } from 'react-router-dom';
 
+const AFFIRMATIONS = [
+  'You are worthy of love and belonging, exactly as you are.',
+  'Every day is a new beginning. Take a deep breath and start again.',
+  'You have survived 100% of your hardest days. You are stronger than you think.',
+  'It is okay to not be okay. Healing is not linear.',
+  'Your feelings are valid. Your emotions are messengers, not masters.',
+  'You are doing the best you can, and that is enough.',
+  'Rest is productive. Taking care of yourself matters.',
+  'One small step forward is still progress. Keep going.',
+  'You are not alone. Millions of people understand how you feel.',
+  'Your mental health journey is unique — comparison is the thief of joy.',
+  'Be gentle with yourself. You are a work in progress.',
+  'Today, choose one thing that brings you peace. That is enough.',
+];
+
 const Dashboard = () => {
   const { user } = useAuth();
   const [moodData, setMoodData] = useState(null);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [affirmationIndex, setAffirmationIndex] = useState(
+    Math.floor(Date.now() / 86400000) % AFFIRMATIONS.length
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,6 +58,7 @@ const Dashboard = () => {
     { icon: BookOpen, label: 'Journal', path: '/journal', color: 'from-blue-500 to-cyan-500' },
     { icon: Users, label: 'Community', path: '/community', color: 'from-purple-500 to-pink-500' },
     { icon: Brain, label: 'AI Wellness', path: '/ai-wellness', color: 'from-green-500 to-emerald-500' },
+    { icon: MessageSquare, label: 'Chats', path: '/chats', color: 'from-indigo-500 to-violet-500' },
   ];
 
   return (
@@ -54,6 +73,31 @@ const Dashboard = () => {
           Welcome back, <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">{user?.firstName}</span>! 👋
         </h1>
         <p className="text-text-secondary">Here's your wellness overview for today</p>
+      </motion.div>
+
+      {/* Daily Affirmation Banner */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.05 }}
+      >
+        <Card className="bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 border-primary/30">
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0">
+              <Sparkles size={20} className="text-white" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-bold text-primary uppercase tracking-widest mb-1">Daily Affirmation</p>
+              <p className="text-text font-medium text-base leading-snug italic">"{AFFIRMATIONS[affirmationIndex]}"</p>
+            </div>
+            <button
+              onClick={() => setAffirmationIndex((i) => (i + 1) % AFFIRMATIONS.length)}
+              className="text-xs text-text-secondary hover:text-primary transition px-3 py-1.5 rounded-lg hover:bg-border flex-shrink-0 whitespace-nowrap"
+            >
+              Next ✨
+            </button>
+          </div>
+        </Card>
       </motion.div>
 
       {/* Quick Actions */}
