@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Trash2, Heart, Search, Filter } from 'lucide-react';
+import { Plus, Trash2, Heart, Search, Filter, BookOpen } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import axiosInstance from '../../api/axios';
 import Card from '../../components/common/Card';

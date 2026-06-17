@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:5000/api/v1';
+const BASE_URL = 'https://innerlight-srip.onrender.com/api/v1';
 
 const email = `qa_tester_${Date.now()}@example.com`;
 const password = 'TestPass123';

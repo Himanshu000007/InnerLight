@@ -44,7 +44,7 @@ const CommunityFeed = () => {
       await axiosInstance.post('/posts', {
         content: data.content,
         category: data.category,
-        isAnonymous: data.isAnonymous === 'on',
+        isAnonymous: !!data.isAnonymous,
         tags: data.tags ? data.tags.split(',').map(t => t.trim()) : [],
       });
       toast.success('Post created successfully!');
