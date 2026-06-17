@@ -90,12 +90,14 @@ const Chats = () => {
 
   const getChatName = (chat) => {
     if (!chat.postId) return 'Anonymous Connection';
-    
-    // Find who wrote the post
-    const authorId = chat.postId.userId?._id || chat.postId.userId;
-    const currentUserId = user.id || user._id;
 
-    if (authorId?.toString() === currentUserId.toString()) {
+    // Safely get the author ID — postId.userId might be null for anonymous posts
+    const authorId = chat.postId.userId?._id?.toString() || chat.postId.userId?.toString() || null;
+    const currentUserId = (user?.id || user?._id)?.toString();
+
+    if (!authorId) return `Anonymous Connection (${chat.postId.category || 'Support'})`;
+
+    if (authorId === currentUserId) {
       return `Anonymous Reader (${chat.postId.category || 'Support'})`;
     } else {
       return `Anonymous Poster (${chat.postId.category || 'Support'})`;
@@ -103,13 +105,13 @@ const Chats = () => {
   };
 
   const getMessageSenderName = (senderId, chat) => {
-    const currentUserId = user.id || user._id;
-    if (senderId.toString() === currentUserId.toString()) {
+    const currentUserId = (user?.id || user?._id)?.toString();
+    if (senderId?.toString() === currentUserId) {
       return 'You';
     }
 
-    const authorId = chat.postId.userId?._id || chat.postId.userId;
-    if (senderId.toString() === authorId.toString()) {
+    const authorId = chat.postId?.userId?._id?.toString() || chat.postId?.userId?.toString() || null;
+    if (authorId && senderId?.toString() === authorId) {
       return 'Anonymous Poster';
     }
     return 'Anonymous Reader';

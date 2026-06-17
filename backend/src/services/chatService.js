@@ -14,9 +14,15 @@ export class ChatService {
         throw error;
       }
 
-      // Find the author of the post
-      const authorId = post.userId._id || post.userId;
-      
+      // Find the author of the post — use optional chaining to safely handle anonymous posts
+      const authorId = post.userId?._id || post.userId;
+
+      if (!authorId) {
+        const error = new Error('This post is fully anonymous — the author cannot be contacted');
+        error.statusCode = 400;
+        throw error;
+      }
+
       if (authorId.toString() === userId.toString()) {
         const error = new Error('You cannot start a chat with yourself');
         error.statusCode = 400;

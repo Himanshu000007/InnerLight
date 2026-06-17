@@ -308,17 +308,24 @@ const CommunityFeed = () => {
                     </div>
 
                     <div className="flex gap-2 items-center">
-                      {(post.userId?._id || post.userId) !== (user?.id || user?._id) && (
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={() => handleConnectChat(post._id)}
-                          className="flex items-center gap-1.5 px-3 py-1.5 bg-primary bg-opacity-10 text-primary hover:bg-primary hover:text-white rounded-lg transition text-xs font-semibold mr-1"
-                        >
-                          <MessageSquare size={16} />
-                          Connect
-                        </motion.button>
-                      )}
+                      {(() => {
+                        // Safely extract the post author's ID as a string
+                        const postAuthorId = post.userId?._id?.toString() || post.userId?.toString() || null;
+                        const currentUserId = (user?.id || user?._id)?.toString() || null;
+                        // Show Connect only when: author is known AND it's not the current user's post
+                        const canConnect = postAuthorId && currentUserId && postAuthorId !== currentUserId;
+                        return canConnect ? (
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => handleConnectChat(post._id)}
+                            className="flex items-center gap-1.5 px-3 py-1.5 bg-primary bg-opacity-10 text-primary hover:bg-primary hover:text-white rounded-lg transition text-xs font-semibold mr-1"
+                          >
+                            <MessageSquare size={16} />
+                            Connect
+                          </motion.button>
+                        ) : null;
+                      })()}
 
                       <motion.button
                         whileHover={{ scale: 1.1 }}
