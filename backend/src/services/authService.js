@@ -93,12 +93,12 @@ export class AuthService {
         password: userData.password,
       });
 
-      const html = emailTemplates.welcome(userData.firstName);
-      await sendEmail(
-        user.email,
-        'Welcome to InnerLight!',
-        html
-      );
+      // const html = emailTemplates.welcome(userData.firstName);
+      // await sendEmail(
+      //   user.email,
+      //   'Welcome to InnerLight!',
+      //   html
+      // );
 
       return {
         success: true,
